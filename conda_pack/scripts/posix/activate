@@ -13,6 +13,8 @@ _conda_pack_activate() {
         local _q="$(ps -p$$ -o cmd="",comm="",fname="" 2>/dev/null | sed 's/^-//' | grep -oE '\w+' | head -n1)"
         if [ "$_q" = dash ]; then
             _CONDA_SHELL_FLAVOR=dash
+        elif [ "$(basename $(readlink /proc/$$/exe))" = "busybox" ]; then
+            _CONDA_SHELL_FLAVOR=ash
         else
             (>&2 echo "Unrecognized shell.")
             return 1
