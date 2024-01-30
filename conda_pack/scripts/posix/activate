@@ -11,7 +11,7 @@ _conda_pack_activate() {
     else
         # https://unix.stackexchange.com/a/120138/92065
         local _q="$(ps -p$$ -o cmd="",comm="",fname="" 2>/dev/null | sed 's/^-//' | grep -oE '\w+' | head -n1)"
-        if [ "$_q" = dash ]; then
+        if [ "$_q" = dash ] || [ "$(basename $(readlink /proc/$$/exe)" = "dash" ]; then
             _CONDA_SHELL_FLAVOR=dash
         elif [ "$(basename $(readlink /proc/$$/exe))" = "busybox" ]; then
             _CONDA_SHELL_FLAVOR=ash
